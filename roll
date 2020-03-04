@@ -1,0 +1,39 @@
+#!/usr/bin/python3
+
+import sys, random, re
+
+def roll_dice(turns, dice):
+    for i in range(1, turns+1):
+        roll = random.randint(1,dice)
+        print(" Your roll #%s of %sd%s: %s" % (i,turns,dice,roll))
+
+def show_error():
+    print('''Please, roll something like "roll 1d6 2d8"''')
+    sys.exit(2)
+
+def show_error_ex():
+    print('''Exception. Please, roll something like "roll 1d6 2d8"''')
+    sys.exit(2)
+
+one_print = True
+
+
+
+for i in range(1, len(sys.argv)):
+    if sys.argv[i] == '-h':
+        one_print = False
+        print('''usage: Please, roll something like "roll 1d6 2d8", or do "roll -h" for help''')
+    elif sys.argv[i] == 'roll.py':
+        pass
+    else:
+        x = (str(sys.argv[i])).split("d")
+        try:
+            turns = int(x[0])
+            dice = int(x[1])
+        except:
+            show_error_ex()
+
+        if turns == 0 or dice == 0:
+            show_error()
+
+        roll_dice(turns, dice)
